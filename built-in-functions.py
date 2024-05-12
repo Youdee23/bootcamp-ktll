@@ -118,3 +118,89 @@ A built in function that takes an iterable and returns a tuple of
 the index and each of the elements of the iterable.
 """
 print(list(enumerate(colors)))
+
+
+# --------------------------------------------------------------------
+# 12-May-2024
+# --------------------------------------------------------------------
+"""
+# CLASSWORK
+----------------------------------------------------------------------
+Write a function that raises a number to the 5th power using the
+lambda function.
+
+Write a program that creates a tuple of a number and the square of the
+number using a combination of a built-in function and a lambda function
+Use this list of numbers:
+numbers = [48, 16, 37, 4, 12, 2]
+
+Using only a for loop and a lambda function, write a program that returns
+every element of a list raised to itself.
+Use this list:
+myList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+"""
+# 1 - solution
+fifth_power = lambda num: num ** 5
+print(type(fifth_power))
+fifth_res = fifth_power(2)
+print(fifth_res)
+
+# 2 - solution
+numbers = [48, 16, 37, 4, 12, 2]
+lambda_power2 = list(zip(map(lambda x: x**2, numbers), numbers))
+print(lambda_power2)
+
+# 3 - solution
+myList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+print([(lambda x: x**x)(x) for x in myList])
+
+# -------------------------------------------------------------------------------
+circle_areas = [3.57843, 5.98032, 2.18384, 56.48219, 9.23765, 45.87365]
+"""
+ROUND
+----------------------------------------------------------------------------
+The round function is used to round floating point numbers to a desired number
+of decimal places. It takes two arguments, the first one being the number to
+be rounded and the second being the number of decimal places to be rounded to.
+"""
+round_funct_map = list(map(round, circle_areas, range(1,7))) # 1,2,3,4,5,6
+print(round_funct_map)
+
+round_funct_map = list(map(round, circle_areas, [2,2,2,2,2,2]))
+print(round_funct_map)
+
+
+"""
+# FILTER
+---------------------------------------------------------------------------------
+Filter function is used to filter elements of an iterable that meets a certain
+criteria. It takes two arguments, a func and an iterable
+SYNTAX: filter(func, iterable)
+
+`func` - must return a boolean
+`iterable` - each element of the iterable will be passed through the func and any
+    element that returns false will be removed
+N/B: Unlike map, the filter function only takes one iterable
+     `func` is required to return True or False.
+     Each element of the iterable will be passed into the `func` and only elements
+     that are True will be kept while elements that are False will be filtered
+     out.
+"""
+chem_scores = [66, 90, 59, 76, 60, 88, 74, 81, 65]
+# filter out score that are less than 60
+print(list(filter(lambda x: x > 60, chem_scores)))
+
+"""
+# CLASSWORK
+----------------------------------------------------------------------------
+Write a program that will only return a list of chem scores that are odd numbers
+using built-in functions.
+"""
+print(list(filter(lambda k: k % 2 != 0, chem_scores)))
+
+my_names = ["olumide", "akinremi", "josiah", "temidayo", "omoseun"]
+"""
+Write a program that will return a list of names that are less than or equal
+to 7 letters.
+"""
+print(list(filter(lambda p: len(p) <= 7, my_names)))
