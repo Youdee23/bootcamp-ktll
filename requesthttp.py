@@ -102,7 +102,88 @@ response.content
 response.json()
 
 # you can inspect the headers sent with the response
-response.headers
+"""
+The headers give very useful information, such as the content type
+that came with the response payload. Headers usually come in the
+form of a dictionary.
+"""
+# view the content type of the response headers
+response.headers['Content-type']
+# view the date of the transaction
+response.headers['Date']
+
+# Customize our get request
+# Query parameters
+"""
+A query is an additional information that can is attached to the
+URL and is used to assign values to specific parameters.
+"""
+# Example
+url = "https://example.com/dadjokes?name=rowyourboot&age=18"
+"""
+So from the above URL, the query string is everything after
+the ?. The & is used to specify more than 1 query string.
+"""
+def req_query():
+    response = requests.get(
+        "https://api.github.com/search/repositories",
+        params={"q": "language:python", "sort": "stars", "order": "desc"}
+    )
+    return response
+
+# call the function to make the request
+res = req_query()
+
+# we can inspect the response
+res_json = res.json()
+repos = res_json["items"]
+for repo in repos[:4]:
+    print(f"Name: {repo['name']}")
+    print(f"Description: {repo['description']}")
+    print("-------------------------------------")
+
+
+# Customizing get request by passing headers
+def req_headers(url, params, headers):
+    response = requests.get(
+        url=url,
+        params=params,
+        headers=headers,
+    )
+    return response
+
+urll = "https://api.github.com/search/repositories"
+paramss = {"q": "language:python", "sort": "stars", "order": "desc"}
+headerss = {"Accept": "application/vnd.github.text-match+json"}
+
+res_header = req_headers(urll, paramss, headerss)
+print(res_header.status_code)
+
+# Inspect the response from request header call
+try:
+    res_header_json = res_header.json()
+    # print(res_header_json) # an error here to be checked
+    first_rep = res_header_json['items'][0]
+    print(first_rep['text_matches'][0]["matches"])
+except Exception as e:
+    print('Error but we move')
+
+
+# Other HTTP METHODS - POST
+"""
+The POST HTTP method is used to submit data to a server.
+post - https://httpbin.org/post
+put - https://httpbin.org/put
+patch - https://httpbin.org/patch
+"""
+post_url = "https://httpbin.org/post"
+post_data = {"color": "red", "race": "black"}
+post_res = requests.post(
+    url=post_url,
+    data=post_data
+)
+
+print(post_res.status_code)
 
 completed_user = {}
 todos = response.json() # this will give us a list
