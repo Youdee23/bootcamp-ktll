@@ -17,27 +17,47 @@ def display_pattern(start, stop):
 
 display_pattern(15, 12)
 
+
 # 1. Iterate 0 to 10 using for loop, do the same using while loop.
 # Solution(Using for loop)
-for i in range(0, 11):
-    print(i)
+def count_to_ten():
+    for i in range(0, 11):
+        print(i)
+
+
+count_to_ten()
+
 
 # Using while loop
-digit = 0
-while digit <= 10:
-    print(digit)
-    digit += 1
+def count_to_ten_too():
+    digit = 0
+    while digit <= 10:
+        print(digit)
+        digit += 1
+
+
+count_to_ten_too()     
+
 
 # 2. Iterate 10 to 0 using for loop, do the same using while loop.
 # Using for loop
-for i in range(0, 11, -1):
-    print(i)
+def count_from_ten_down():
+    for i in range(0, 11, -1):
+        print(i)
+
+
+count_from_ten_down()
+
 
 # Using while loop
-number = 10
-while number >= 0:
-    print(number)
-    number -= 1
+def count_from_ten_down_too():
+    number = 10
+    while number >= 0:
+        print(number)
+        number -= 1
+
+        
+count_from_ten_down_too()
 
 # 3. Write a loop that makes seven calls to print(), so we get on the output the following triangle:
 
@@ -49,9 +69,14 @@ while number >= 0:
   ######
   #######
 
+
 # Solution
-for num in range(1, 8):
-    print('#' * num)
+def triangular_pattern():
+    for num in range(1, 8):
+        print('#' * num)
+
+    
+triangular_pattern()
 
 # 4. Use nested loops to create the following:
 
@@ -64,11 +89,16 @@ for num in range(1, 8):
 # # # # # # # #
 # # # # # # # #
 
+
 # Solution
-for u in range(9):
-    for i in range(9):
-        print('#', end='')
-    print()
+def square_block_pattern():
+    for u in range(9):
+        for i in range(9):
+            print('#', end='')
+        print()
+
+
+square_block_pattern()
 
 '''
 5. Print the following pattern:
@@ -85,47 +115,83 @@ for u in range(9):
 9 x 9 = 81
 10 x 10 = 100
 '''
+
+
 # Solution
-for num in range(11):
-    print(f'{str(num)} * {str(num)} = {num * num}')
+def multiplication_table():
+    for num in range(11):
+        print(f'{str(num)} * {str(num)} = {num * num}')
+
+
+multiplication_table()
+
 
 # 6. Iterate through the list, ['Python', 'Numpy','Pandas','Django', 'Flask'] using a for loop and print out the items.
-p_languages = ['Python', 'Numpy', 'Pandas', 'Django', 'Flask'] 
-for language in p_languages:
-    print(language)
+def language_list():
+    p_languages = ['Python', 'Numpy', 'Pandas', 'Django', 'Flask'] 
+    for language in p_languages:
+        print(language)
+
+        
+language_list()
+
 
 # Use for loop to iterate from 0 to 100 and print only even numbers
-for number in range(101):
-    if number % 2 == 0:
-        print(number)
+def print_evens():
+    for number in range(101):
+        if number % 2 == 0:
+            print(number)
+
+
+print_evens()
+
 
 # Use for loop to iterate from 0 to 100 and print only odd numbers
-for digit in range(101):
-    if digit % 2 != 0:
-        print(digit)
+def print_odds():
+    for digit in range(101):
+        if digit % 2 != 0:
+            print(digit)
+
+
+print_odds()
 
 '''
 7. Use for loop to iterate from 0 to 100 and print the sum of all numbers.
 The sum of all numbers is 5050.
 '''
 
-sum = 0
-for number in range(101):
-    sum += number
-print(sum)
+
+def sum_all_numbers():
+    sum = 0
+    for number in range(101):
+        sum += number
+    print(sum)
+
+
+sum_all_numbers()
+
 
 # Use for loop to iterate from 0 to 100 and print the sum of all evens and the sum of all odds.
-sum_evens = 0
-for number in range(101):
-    if number % 2 == 0:
-        sum_evens += number
-print(sum_evens)
+def sum_all_evens():
+    sum_evens = 0
+    for number in range(101):
+        if number % 2 == 0:
+            sum_evens += number
+    print(sum_evens)
 
-sum_odds = 0
-for number in range(101):
-    if number % 2 != 0:
-        sum_odds += number
-print(sum_odds)
+
+sum_all_evens()
+
+
+def sum_all_odds():
+    sum_odds = 0
+    for number in range(101):
+        if number % 2 != 0:
+            sum_odds += number
+    print(sum_odds)
+
+
+sum_all_odds()
 # The sum of all evens is 2550. And the sum of all odds is 2500.
 
 
@@ -325,14 +391,25 @@ countries = [
   'Zambia',
   'Zimbabwe',
 ]
-for country in countries:
-    if 'land' in country:
-        print(country)
+
+
+def country_with_land_in_name():
+    for country in countries:
+        if 'land' in country:
+            print(country)
+
+
+country_with_land_in_name()
+
 
 # This is a fruit list, ['banana', 'orange', 'mango', 'lemon'] reverse the order using loop.
-fruits = ['banana', 'orange', 'mango', 'lemon']
-for fruit in fruits[::-1]:
-    print(fruit)
+def fruits_reversed():
+    fruits = ['banana', 'orange', 'mango', 'lemon']
+    for fruit in fruits[::-1]:
+        print(fruit)
+
+
+fruits_reversed()
 
 # Go to the data folder and use the countries_data.py file.
 # What are the total number of languages in the data
