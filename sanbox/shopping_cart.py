@@ -17,7 +17,7 @@ def listed_shopping(shopping_list):
             print(f"'{k}: {v}'")
 
 
-print("Welcome Itoro's shopping mall")
+print("Welcome to Itoro's shopping mall")
 shopping_list = [{"cookies": 599.20, "milk": 200.00, "eggs": 545.99,
                   "toys": 785.21, "chicken": 356.90, "yoghurt": 340.00,
                   "drinks": 555.00, "sugar": 977.88}]
