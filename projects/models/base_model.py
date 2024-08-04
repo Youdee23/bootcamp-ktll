@@ -1,5 +1,7 @@
 import uuid
 from datetime import datetime
+from __init__ import storage
+from projects.models.engine import file_storage
 
 
 class BaseModel:
@@ -17,13 +19,17 @@ class BaseModel:
         self.id = str(uuid.uuid4())
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
-        self.args = args
-        self.kwargs = kwargs
+
+        if not self.__class__.__name__.__dict__:
+            print(storage.new()) 
 
         if kwargs:
             kwargs = {}
             for k, v in vars(self).items():
                 kwargs[k] = v
+        else:
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.now()
 
     def __str__(self):
         return f'[{self.__class__.__name__}] ({self.id}) <{self.__dict__}>'
@@ -39,6 +45,9 @@ class BaseModel:
         instance_dict['created_at'] = instance_dict['created_at'].isoformat()
         instance_dict['updated_at'] = instance_dict['updated_at'].isoformat()
         return instance_dict
+    
+    print(storage.save())
+    
 
 
 
