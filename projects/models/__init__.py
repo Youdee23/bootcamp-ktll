@@ -1,10 +1,5 @@
-from projects.models.engine import file_storage
-
-
-class FileStorage:
-    def __init__(self):
-        pass
+from models.engine.file_storage import FileStorage
 
 
 storage = FileStorage()
-print(storage.reload())
+storage.reload()
