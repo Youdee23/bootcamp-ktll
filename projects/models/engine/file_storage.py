@@ -1,6 +1,6 @@
 import json
 import os
-import base_model
+# import base_model
 
 
 class FileStorage:
@@ -15,18 +15,25 @@ class FileStorage:
     
     def new(self, obj):
         """ Updates the `__objects` dict """
-        obj.update({f"{str(self.__class__.__name__)}.{self.id}": self.id})
+        obj.update({f"{type(obj).__name__}.{obj.id}": obj})
     
     def save(self):
-        """ Serializes instances to a json file """
-        json.dumps(self.__objects, default=lambda __objects: __objects.__dict__)
-    
+        """ Serializes __objects to a json file """
+        with open(self.__file_path, "w") as js_file:
+            json.dump(self.__objects, js_file)
+
     def reload(self):
-        """ Deserializes json file to instances """
-        if self.__file_path:
-            json.loads(self.__file_path)
-        else:
+        """ Deserializes json file to __objects """
+        try:
+            with open(self.__file_path) as js_file:
+                data = json.load(js_file)
+                for k, v in data.items():
+                    self.__objects[k] = v
+        except FileNotFoundError:
             pass
+        
+        
+        
         
           
 # script_dir = os.path.dirname(__file__)
