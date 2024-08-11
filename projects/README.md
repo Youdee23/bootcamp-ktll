@@ -70,9 +70,57 @@ Write a class `FileStorage` that serializes instances to a JSON file and deseria
 * Write a program called `console.py` that contains the entry point of the command interpreter. This file should be in the root of the projects directory. This file will be used to run the entire application as a command prompt.
 
     * Use the module `cmd`
-    * Your class definition: `class HBNBCommand(cmd.Cmd):`
+    * Your class definition: `class AirBNBCommand(cmd.Cmd):`
     * Your command interpreter should implement quit and EOF to exit the program
     help (this action is provided by default by cmd but you should keep it updated and documented as you work through tasks)
-    * a custom prompt: (hbnb)
+    * a custom prompt: airbnb >>> 
     * an empty line + ENTER shouldn’t execute anything
     * Your code should not be executed when imported
+
+## TASK 6
+
+Some rules:
+
+* You can assume arguments are always in the right order
+* Each arguments are separated by a space
+* A string argument with a space must be between double quote
+* The error management starts from the first argument to the last one
+
+Update the `console.py` to have these commands:
+
+You will need to import `storage` from `__init__` and base model as well
+
+* `create`: Creates a new instance of `BaseModel`, saves it (to the JSON file) and prints the `id`. Ex: `airbnb >>> create BaseModel`
+    * If the class name is missing, print `** class name missing **` (ex: `airbnb >>> create`)
+    * If the class name doesn’t exist, print `** class doesn't exist **` (ex: `airbnb >>> create MyModel`)
+
+* `show`: Prints the string representation of an instance based on the class name and `id`. Ex: `airbnb >>> show BaseModel 1234-1234-1234`
+    * If the class name is missing, print `** class name missing **` (ex: `airbnb >>> show`)
+    * If the class name doesn’t exist, print `** class doesn't exist **` (ex: `airbnb >>> show MyModel`)
+    * If the `id `is missing, print `** instance id missing **` (ex: `airbnb >>> show BaseModel`)
+    * If the instance of the class name doesn’t exist for the `id`, print `** no instance found **` (ex: `airbnb >>> show BaseModel 121212`)
+
+* `destroy`: Deletes an instance based on the class name and `id` (save the change into the JSON file). Ex: `airbnb >>> destroy BaseModel 1234-1234-1234`.
+    * If the class name is missing, print `** class name missing **` (ex: `airbnb >>> destroy`)
+    * If the class name doesn’t exist, print `** class doesn't exist **` (ex:`airbnb >>> destroy MyModel`)
+    * If the id is missing, print `** instance id missing **` (ex: `airbnb >>> destroy BaseModel`)
+    * If the instance of the class name doesn’t exist for the `id`, print `** no instance found **` (ex: `airbnb >>> destroy BaseModel 121212`)
+
+* `all`: Prints all string representation of all instances based or not on the class name. Ex: `airbnb >>> all BaseModel` or `airbnb >>> all`.
+    * The printed result must be a list of strings (like the example below)
+    * If the class name doesn’t exist, print `** class doesn't exist **` (ex: `airbnb >>> all MyModel`)
+
+* `update`: Updates an instance based on the class name and `id` by adding or updating attribute (save the change into the JSON file). Ex: `airbnb >>> update BaseModel 1234-1234-1234 email "aibnb@mail.com"`.
+    * Usage: `update <class name> <id> <attribute name> "<attribute value>"`
+    * Only one attribute can be updated at the time
+    * You can assume the attribute name is valid (exists for this model)
+    * The attribute value must be casted to the attribute type
+    * If the class name is missing, print `** class name missing **` (ex: `airbnb >>> update`)
+    * If the class name doesn’t exist, print `** class doesn't exist **` (ex: `airbnb >>> update MyModel`)
+    * If the id is missing, print `** instance id missing **` (ex: `airbnb >>> update BaseModel`)
+    * If the instance of the class name doesn’t exist for the `id`, print `** no instance found **` (ex: `airbnb >>> update BaseModel 121212`)
+    * If the attribute name is missing, print `** attribute name missing **` (ex: `airbnb >>> update BaseModel existing-id`)
+    * If the value for the attribute name doesn’t exist, print `** value missing **` (ex: `airbnb >>> update BaseModel existing-id first_name`)
+    * All other arguments should not be used (Ex: `airbnb >>> update BaseModel 1234-1234-1234 email "aibnb@mail.com" first_name "Betty"` = `airbnb >>> update BaseModel 1234-1234-1234 email "aibnb@mail.com"`)
+    * `id`, `created_at` and `updated_at` cant’ be updated. You can assume they won’t be passed in the `update` command
+    * Only “simple” arguments can be updated: string, integer and float. You can assume nobody will try to update list of ids or datetime
