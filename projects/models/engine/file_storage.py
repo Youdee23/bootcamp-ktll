@@ -1,5 +1,8 @@
 import json
 import os
+from projects.models.city import City
+from projects.models.state import State
+from projects.models.user import User
 # import base_model
 
 
@@ -21,6 +24,9 @@ class FileStorage:
         """ Serializes __objects to a json file """
         with open(self.__file_path, "w") as js_file:
             json.dump(self.__objects, js_file)
+        User.save()
+        State.save()
+        City.save()   
 
     def reload(self):
         """ Deserializes json file to __objects """
@@ -31,6 +37,9 @@ class FileStorage:
                     self.__objects[k] = v
         except FileNotFoundError:
             pass
+        User.reload()
+        State.reload()
+        City.reload()
         
         
         
