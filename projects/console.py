@@ -4,10 +4,12 @@ A module to be used a command prompt for
 the running the entire application
 """
 import cmd
-from projects.models.__init__ import storage
-from projects.models.base_model import BaseModel
-from projects.models.engine.file_storage import FileStorage
-import sys
+from shlex import split
+import models
+from models.base_model_soln import BaseModel
+from projects.models.city import City
+from projects.models.state import State
+from projects.models.user import User
 
 
 class AirBNBCommand(cmd.Cmd):
@@ -16,7 +18,8 @@ class AirBNBCommand(cmd.Cmd):
     that serve as a command line interpreter.
     """
     intro = "Welcome to the AirBNB command program"
-    prompt = "airbnb >>> "
+    prompt = "(airbnb) >>> "
+    __classes = {"BaseModel": BaseModel, "User": User, "State": State, "City": City}
 
     def do_quit(self, line):
         return True
@@ -28,138 +31,103 @@ class AirBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, line):
-        """ 
-        Creates a new instance of base model and saves it to
-        the json file and prints the id
-        """
-        b = BaseModel()
-        b.save()
-        print(b.id)
-
-        try:
-            sys.argv[1]
-        except IndexError:
+        """ Creates a new instance of BaseModel, save it, and print id."""
+        args = split(line, " ")
+        if not line:
             print("** class name missing **")
-
-        try:
-            sys.argv[1]
-        except NameError:
+        elif args[0] not in self.__classes:
             print("** class doesn't exist **")
-
+        else:
+            # kwargs = {}
+            # for i in range(1, len(args)):
+            #     key, value = tuple(args[i].split("="))
+            #     if value[0] == '"':
+            #         value = value.strip('"').replace("_", " ")
+            #     else:
+            #         try:
+            #             value = eval(value)
+            #         except (SyntaxError, NameError):
+            #             continue
+            #     kwargs[key] = value
+            # obj = eval(args[0])(**kwargs)
+            # obj.save()
+            # print(obj.id)
+            new_instance = AirBNBCommand.__classes[args[0]]()
+            models.storage.save()
+            print(new_instance)
+            # models.storage.save()
+    
     def do_show(self, line):
-        """
-        Prints the string representation of an instance based on the class
-        name and `id`
-        """
-        self.__str__()
-
-        try:
-            sys.argv[1]
-        except IndexError:
+        """Prints the string representation of an instance."""
+        args = split(line, " ")
+        if not line:
             print("** class name missing **")
-
-        try:
-            sys.argv[1]
-        except NameError:
+        elif args[0] not in self.__classes:
             print("** class doesn't exist **")
-
-        try:
-            sys.argv[2]
-        except IndexError:
+        elif len(args) < 2:
             print("** instance id missing **")
-
-        try:
-            sys.argv[1:3]
-        except NameError:
-            print("** no instance found **")
+        else:
+            key = args[0] + "." + args[1]
+            objs = models.storage.all()
+            if key in objs:
+                print(key)
+            else:
+                print("** no instance found **")
 
     def do_destroy(self, line):
-        """
-        Deletes an instance based on the class name and `id` (save the change
-        into the JSON file)
-        """
-        try:
-            sys.argv[1]
-        except IndexError:
+        """Deletes an instance based on classname and id."""
+        args = split(line, " ")
+        if not line:
             print("** class name missing **")
-
-        try:
-            sys.argv[1]
-        except NameError:
+        elif args[0] not in self.__classes:
             print("** class doesn't exist **")
-
-        try:
-            sys.argv[2]
-        except IndexError:
+        elif len(args) < 2:
             print("** instance id missing **")
-
-        try:
-            sys.argv[1:3]
-        except NameError:
-            print("** no instance found **")
-
-        del self.__class__.__name__.id
+        else:
+            key = args[0] + "." + args[1]
+            objs = models.storage.all()
+            if key in objs:
+                del objs[key]
+            else:
+                print("** no instance found **")
 
     def do_all(self, line):
-        """
-        Prints all string representation of all instances based or not on the
-        class name.
-        """ 
-        str_dict = {}      
-        if len(sys.argv) == 2:
-            for k, v in self.__objects:
-                str_dict[k] = v.__str__()
-        elif len(sys.argv) == 3:
-            self.__str__()
-        else:
-            pass
+        """Print all string representation of instance."""
+        try:
+            args = split(line, " ")
+            if args[0] not in self.__classes:
+                raise NameError()
             
-    def do_update(self, line):
-        """
-        Updates an instance based on the class name and `id` by adding or 
-        updating attribute 
-        """
-        if type(sys.argv[4]) is not type(sys.argv[3]):
-            (type(sys.argv[3])(sys.argv[4]))
-        else:
-            pass
-
-        try:
-            sys.argv[1]
-        except IndexError:
-            print("** class name missing **")
-
-        try:
-            sys.argv[1]
+            obj = models.storage.all(eval(args[0]))
+            for key in obj:
+                print(obj[key].__str__())
         except NameError:
             print("** class doesn't exist **")
 
-        try:
-            sys.argv[2]
-        except IndexError:
+    def do_update(self, line):
+        """Updates an instance based on class name and id"""
+        args = line.split()
+        if not args:
+            print("** class name missing **")
+        elif args[0] not in self.__classes:
+            print("** class doesn't exist **")
+        elif len(args) < 2:
             print("** instance id missing **")
-
-        try:
-            sys.argv[1:]
-        except NameError:
-            print("** no instance found **")
-   
-        try:
-            sys.argv[3]
-        except IndexError:
+        elif len(args) < 3:
             print("** attribute name missing **")
-
-        try:
-            sys.argv[4]
-        except NameError:
-            print("** value missing")
-
-        if len(sys.argv) > 5:
-            line == sys.argv[:5]
+        elif len(args) < 4:
+            print("** value missing **")
         else:
-            pass
-
+            key = args[0] + "." + args[1]
+            objs = models.storage.all()
+            if key in objs:
+                obj = objs[key]
+                atrr_name = args[2]
+                attr_value = args[3]
+                setattr(obj, atrr_name, attr_value)
+                obj.save()
+            else:
+                print("** no instance found **")
 
 if __name__ == "__main__":
     AirBNBCommand().cmdloop()
-
