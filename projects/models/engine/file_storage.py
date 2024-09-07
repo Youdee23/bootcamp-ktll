@@ -23,10 +23,7 @@ class FileStorage:
     def save(self):
         """ Serializes __objects to a json file """
         with open(self.__file_path, "w") as js_file:
-            json.dump(self.__objects, js_file)
-        User.save()
-        State.save()
-        City.save()   
+            json.dump(self.__objects, js_file)   
 
     def reload(self):
         """ Deserializes json file to __objects """
@@ -37,9 +34,7 @@ class FileStorage:
                     self.__objects[k] = v
         except FileNotFoundError:
             pass
-        User.reload()
-        State.reload()
-        City.reload()
+        
         
         
         
