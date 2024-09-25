@@ -11,6 +11,7 @@ class ShoppingCart:
     def __init__(self, max_size=5):
         self.items = []
         self.max_size = max_size
+        self.price = []
 
     def add(self, item):
         if self.size() == self.max_size:
@@ -27,4 +28,4 @@ class ShoppingCart:
         return self.items
 
     def get_total_price(self):
-        pass
+        return sum(self.price)
