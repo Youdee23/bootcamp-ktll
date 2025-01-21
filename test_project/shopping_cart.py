@@ -31,8 +31,8 @@ class ShoppingCart:
             raise OverflowError(f"Cannot add more than {self.max_size}")
         self.items.append(item)
 
-    def remove(self):
-        pass
+    def remove(self, item: str) -> None: 
+        self.items.remove(item)
 
     def size(self):
         return len(self.items)
